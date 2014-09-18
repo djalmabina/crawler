@@ -1,6 +1,8 @@
 class Crawler::Page
-  def url
-    "/"
+  attr_reader :url
+
+  def initialize(url: url)
+    @url = url
   end
 
   def assets
@@ -9,5 +11,9 @@ class Crawler::Page
 
   def links
     []
+  end
+
+  def path
+    URI.parse(url).path
   end
 end

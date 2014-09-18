@@ -1,14 +1,24 @@
+require 'capybara'
+require 'open-uri'
+
 class Crawler
   autoload :Page, 'crawler/page.rb'
 
-  def initialize(url)
+  include Capybara::DSL
 
+  attr_reader :pages
+
+  def initialize(url)
+    @root = url
+    @pages = []
   end
 
   def crawl!
+    crawl_page @root
   end
 
-  def pages
-    [Page.new]
+  def crawl_page(url)
+    page = Capybara.string(open(URI.encode(url)).read)
+    @pages << Page.new(url: url)
   end
 end
