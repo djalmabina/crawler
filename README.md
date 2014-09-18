@@ -1,5 +1,7 @@
 # Crawler
 
+[![Build Status](https://travis-ci.org/ngauthier/crawler.svg?branch=master)](https://travis-ci.org/ngauthier/crawler)
+
 A simple web crawler that traverses and stores all links on a target domain.
 
 ## Goals
