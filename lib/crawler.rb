@@ -2,9 +2,6 @@ require 'nokogiri'
 require 'open-uri'
 
 class Crawler
-  autoload :Page,  'crawler/page.rb'
-  autoload :Asset, 'crawler/asset.rb'
-
   attr_reader :pages
 
   def initialize(url)
@@ -29,12 +26,12 @@ class Crawler
     js     = page.css("script").map{|node| node["src"]}.compact
     images = page.css("img"   ).map{|node| node["src"]}
 
-    assets = (css + js + images).map{|path| Asset.new(path: path)}
-
     # todo: move this to a Link class, also need to remove external links and add domain for relative links
-    links = page.css("a").map{|node| node["href"]}
+    links = page.css("a").map{|node| node["href"]}.sort
 
-    @pages << Page.new(url: url, assets: assets, links: links)
+    assets = (css + js + images).sort
+
+    @pages << {path: URI.parse(url).path, links: links, assets: assets}
     links.each do |link|
       crawl_page link
     end

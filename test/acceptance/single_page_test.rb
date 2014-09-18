@@ -12,10 +12,12 @@ class SinglePageTest < Minitest::Test
   def test_crawls_single_page
     crawler = Crawler.new(@site.url)
     crawler.crawl!
-    assert_equal 1, crawler.pages.size
-    page = crawler.pages.first
-    assert_equal "/", page.path
-    assert_empty page.assets
-    assert_empty page.links
+    assert_equal [
+      {
+        path: "/",
+        links: [],
+        assets: []
+      }
+    ], crawler.pages
   end
 end
