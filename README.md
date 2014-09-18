@@ -41,6 +41,7 @@ An extended adjacency list in JSON. Top level object is an array, each child is 
 1. To keep the solution small and simple, do work locally, not with a larger database
 1. Not going to do a full distributed cloud based solution until we need to crawl enormous sites
 1. Half of the solution should be extensible to a distributed solution (the crawling part) and the storage and workers should be sufficiently decoupled to allow a pivot to a cloud based solution with minimal discomfort
+1. Assets are JavaScript, CSS, and Images with external paths. Inlined CSS and JS will not be included as they are not an external file (that would need to be fetched).
 
 ## Looking ahead: edge cases and potential issues
 

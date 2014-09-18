@@ -1,16 +1,10 @@
 class Crawler::Page
-  attr_reader :url
+  attr_reader :url, :assets, :links
 
-  def initialize(url: url)
+  def initialize(url: url, assets: [], links: [])
     @url = url
-  end
-
-  def assets
-    []
-  end
-
-  def links
-    []
+    @assets = assets
+    @links = links
   end
 
   def path
