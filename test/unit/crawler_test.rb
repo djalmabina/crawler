@@ -6,27 +6,32 @@ class CrawlerTest < Minitest::Test
   end
 
   def test_parse_relative_url
-    path = @crawler.parse_url("/about_us#anchor?param=false")
-    assert_equal "http://example.com/about_us#anchor?param=false", path.to_s
+    url = @crawler.parse_url("/about_us#anchor?param=false")
+    assert_equal "http://example.com/about_us#anchor?param=false", url.to_s
   end
   
   def test_parse_absolute_url
-    path = @crawler.parse_url("http://example.com/about_us#anchor?param=false")
-    assert_equal "http://example.com/about_us#anchor?param=false", path.to_s
-  end
-
-  def test_parse_external_url
-    path = @crawler.parse_url("http://google.com/about_us#anchor?param=false")
-    assert_equal nil, path
+    url = @crawler.parse_url("http://example.com/about_us#anchor?param=false")
+    assert_equal "http://example.com/about_us#anchor?param=false", url.to_s
   end
 
   def test_parse_relative_url_with_anchor
-    path = @crawler.parse_url("/about_us#anchor")
-    assert_equal "http://example.com/about_us#anchor", path.to_s
+    url = @crawler.parse_url("/about_us#anchor")
+    assert_equal "http://example.com/about_us#anchor", url.to_s
   end
 
   def test_parse_relative_url_with_params
-    path = @crawler.parse_url("/about_us?param=false")
-    assert_equal "http://example.com/about_us?param=false", path.to_s
+    url = @crawler.parse_url("/about_us?param=false")
+    assert_equal "http://example.com/about_us?param=false", url.to_s
+  end
+
+  def test_parse_external_url
+    url = @crawler.parse_url("http://google.com/about_us#anchor?param=false")
+    assert_nil url
+  end
+
+  def test_parse_subdomain_url
+    url = @crawler.parse_url("http://subdomain.example.com/about_us#anchor?param=false")
+    assert_nil url
   end
 end
