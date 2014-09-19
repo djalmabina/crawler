@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'crawler/open_uri_redirection_patch'
 require 'logger'
 
 class Crawler
@@ -27,27 +28,34 @@ class Crawler
 
   def crawl!
     logger.info "Starting crawl of #{@start}"
-    crawl_page @start
+    Page.create(url: @start)
+    while page = next_uncrawled_page
+      crawl_page page.url
+    end
+  end
+
+  def next_uncrawled_page
+    Page.detect do |page|
+      page.links.nil?
+    end
   end
 
   def crawl_page(url)
-    logger.info "Crawling #{url}"
     uri = parse_url(url)
-
-    if Page.find(uri.to_s)
-      logger.info "Skipping duplicate #{uri.to_s}"
-      return
-    end
+    logger.info uri.to_s
 
     page = parse_page(open(uri).read)
     page.url = uri.to_s
-
     page.save
-    logger.info "Crawled #{page.inspect}"
 
     page[:links].each do |link|
-      crawl_page link
+      if Page.find(link).nil?
+        Page.create(url: link)
+      end
     end
+  rescue OpenURI::HTTPError
+    logger.warn "404: #{url}"
+    Page.create(url: uri.to_s, links: [], assets: [], "404" => true)
   end
 
   def parse_page(html)
@@ -58,7 +66,7 @@ class Crawler
     images = doc.css(%{img}                  ).map{|node| node["src"] }.compact
     links  = doc.css(%{a}                    ).map{|node| node["href"]}.compact.map{|l|
       parse_url(l)
-    }.map(&:to_s).uniq.sort
+    }.compact.map(&:to_s).uniq.sort
 
     assets = (css + js + images).sort
 
