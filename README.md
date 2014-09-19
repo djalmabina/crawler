@@ -49,9 +49,17 @@ The process is fully resumable. If you kill it or it crashes, it can be re-run a
 
 ## Testing
 
+To run the tests, be sure to `bundle` then simply run:
+
+    rake
+
 From the start the project was test-driven and coverage was measured via simplecov. Coverage was required to be at 100% or the build would fail. In a few cases tests were written after the code when the code being written was exploratory. After the test covered the exploratory code the code was refactored under test until it was acceptable.
 
 The only uncovered line of code is the executable itself, `bin/crawler`, but that is a simple delegation to the `Crawler.cli` method, which is fully tested.
+
+There are two levels of tests: unit and acceptance. The unit tests are very fast and run on the models and exercise individual methods. The acceptance tests are slower because they boot a webrick server based on files in `test/fixtures`, however this gives a *very* high confidence level in the functionality of the application.
+
+In addition to the tests, I of course ran the crawler on a number of public sites. Any time there was a crash or bug I replicated that in the unit or acceptance tests. For example, the invalid uri test and 404 handling came from trying the crawler on a live site.
 
 ## Unix and Ruby Conventions
 
