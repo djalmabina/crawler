@@ -2,7 +2,6 @@ require 'test_helper'
 
 class SinglePageTest < Crawler::TestCase
   def setup
-    super
     @site = FakeSite.new("single_page_site")
   end
 

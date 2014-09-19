@@ -34,4 +34,8 @@ class CrawlerTest < Crawler::TestCase
     url = @crawler.parse_url("http://subdomain.example.com/about_us#anchor?param=false")
     assert_nil url
   end
+
+  def test_parse_invalid_uri
+    assert_nil @crawler.parse_url("mailto:community@digitalocean.com?subject=Project Submission")
+  end
 end

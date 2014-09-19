@@ -2,7 +2,6 @@ require 'test_helper'
 
 class CycleTest < Crawler::TestCase
   def setup
-    super
     @site = FakeSite.new("cycle_site")
   end
 

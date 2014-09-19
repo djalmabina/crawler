@@ -2,7 +2,6 @@ require 'test_helper'
 
 class MultiPageTest < Crawler::TestCase
   def setup
-    super
     @site = FakeSite.new("multi_page_site")
   end
 

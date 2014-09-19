@@ -14,13 +14,12 @@ A simple web crawler that traverses and stores all links on a target domain.
 - [x] Site map should show links between pages
 - [x] Focus on code quality and write tests
 - [x] Executable to use on the cli
-- [ ] Integration test on a real page
 - [ ] Output as yaml, json, xml
 - [x] Does not follow cycles
 - [ ] Resumable
-- [ ] Progress indicator
-- [ ] Compact and Uniq links
-- [ ] Run it on a real site
+- [x] Progress indicator
+- [x] Compact and Uniq links
+- [x] Run it on a real site
 - [ ] Use tempfile for page db
 
 ## Usage
@@ -51,3 +50,4 @@ An extended adjacency list in JSON. Top level object is an array, each child is 
 1. Not going to do a full distributed cloud based solution until we need to crawl enormous sites
 1. Half of the solution should be extensible to a distributed solution (the crawling part) and the storage and workers should be sufficiently decoupled to allow a pivot to a cloud based solution with minimal discomfort
 1. Assets are `style`, `link`, and `img` tags with external paths. Inlined CSS and JS will not be included as they are not an external file (that would need to be fetched). It should be simple to add more tags to store.
+1. I did not trim off trailing slashes. I decided that if a site references a page with and without a slash that I would recognize that. Especially since removing the slash is a destructive action which does not retain the fact that the link had a slash. So a further scrape of that page would find a link that didn't match one in our db. Simply put: you said it's different so I'll respect that.

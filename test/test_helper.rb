@@ -23,7 +23,7 @@ class FakeSite
     @server = nil
     @thread = Thread.new do
       Thread.abort_on_exception = true
-      log_file = File.open("tmp/fake_server.log", "a")
+      log_file = File.open("log/fake_server.log", "a")
       @server = WEBrick::HTTPServer.new(
         Port: 4000,
         DocumentRoot: "test/fixtures/#{fixture_path}",
