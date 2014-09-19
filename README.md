@@ -13,12 +13,15 @@ A simple web crawler that traverses and stores all links on a target domain.
 - [x] Site map should show which static assets each page depends on
 - [x] Site map should show links between pages
 - [x] Focus on code quality and write tests
-- [ ] Executable to use on the cli
+- [x] Executable to use on the cli
 - [ ] Integration test on a real page
 - [ ] Output as yaml, json, xml
 - [x] Does not follow cycles
 - [ ] Resumable
 - [ ] Progress indicator
+- [ ] Compact and Uniq links
+- [ ] Run it on a real site
+- [ ] Use tempfile for page db
 
 ## Usage
 
