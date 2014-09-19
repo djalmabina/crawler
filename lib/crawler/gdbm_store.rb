@@ -1,3 +1,5 @@
+require 'gdbm'
+
 class Crawler::GDBMStore < OpenStruct
   extend Enumerable
 

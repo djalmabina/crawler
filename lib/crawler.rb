@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'crawler/open_uri_redirection_patch'
 require 'logger'
+require 'json'
 
 class Crawler
   autoload :Page,      "crawler/page"
@@ -83,8 +84,5 @@ class Crawler
   rescue URI::InvalidURIError
     logger.warn "Invalid URL: #{url}"
     return nil
-  end
-
-  def log_file
   end
 end
