@@ -13,7 +13,7 @@ class Crawler
     Crawler::Page.delete_all!
     crawler = new(args[0])
     crawler.crawl!
-    io.puts Crawler::Page.to_a
+    io.puts JSON.pretty_generate(Crawler::Page.to_a)
   end
 
   def initialize(url)
@@ -46,9 +46,9 @@ class Crawler
     css    = doc.css(%{link[type="text/css"]}).map{|node| node["href"]}.compact
     js     = doc.css(%{script}               ).map{|node| node["src"] }.compact
     images = doc.css(%{img}                  ).map{|node| node["src"] }.compact
-    links  = doc.css(%{a}                    ).map{|node| node["href"]}.compact.sort
-
-    links  = links.map{|l| parse_url(l).to_s }
+    links  = doc.css(%{a}                    ).map{|node| node["href"]}.map{|l|
+      parse_url(l)
+    }.compact.map(&:to_s).uniq.sort
 
     assets = (css + js + images).sort
 

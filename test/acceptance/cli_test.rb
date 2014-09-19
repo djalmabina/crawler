@@ -12,7 +12,7 @@ class CliTest < Crawler::TestCase
 
   def test_crawls_single_page
     out, err = run_cli "http://localhost:4000"
-    assert_equal %{{:links=>[], :assets=>[], :url=>"http://localhost:4000"}}, out.strip
+    assert_equal JSON.pretty_generate([{:links=>[], :assets=>[], :url=>"http://localhost:4000"}]), out.strip
   end
 
   def test_invalid_usage
