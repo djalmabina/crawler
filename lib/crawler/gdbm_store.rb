@@ -11,7 +11,6 @@ class Crawler::GDBMStore < OpenStruct
 
   def self.database_file(path)
     @db = GDBM.new(path)
-    db.fastmode = true
   end
 
   def self.each

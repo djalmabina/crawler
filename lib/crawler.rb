@@ -5,6 +5,17 @@ class Crawler
   autoload :Page,      "crawler/page"
   autoload :GDBMStore, "crawler/gdbm_store"
 
+  def self.cli(args, io = $stdout, err = $stdout)
+    if args.size != 1
+      err.puts "Usage: crawler starting-uri"
+      exit 1
+    end
+    Crawler::Page.delete_all!
+    crawler = new(args[0])
+    crawler.crawl!
+    io.puts Crawler::Page.to_a
+  end
+
   def initialize(url)
     @start = url
     @uri   = URI.parse(url)
@@ -24,7 +35,7 @@ class Crawler
     page.save
 
     page[:links].each do |link|
-      return if Page.find(link)
+      next if Page.find(link)
       crawl_page link
     end
   end

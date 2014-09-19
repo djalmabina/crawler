@@ -1,10 +1,11 @@
-require 'bundler'
-Bundler.require
-
 require 'simplecov'
 SimpleCov.minimum_coverage 100
 SimpleCov.add_filter "vendor"
 SimpleCov.start
+
+require 'bundler'
+Bundler.require
+
 require 'minitest/autorun'
 require 'crawler'
 require 'webrick'
