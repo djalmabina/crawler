@@ -16,7 +16,7 @@ A simple web crawler that traverses and stores all links on a target domain.
 - [ ] Executable to use on the cli
 - [ ] Integration test on a real page
 - [ ] Output as yaml, json, xml
-- [ ] Does not follow cycles
+- [x] Does not follow cycles
 - [ ] Resumable
 - [ ] Progress indicator
 

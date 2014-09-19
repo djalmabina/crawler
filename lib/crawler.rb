@@ -24,6 +24,7 @@ class Crawler
     @pages << page
 
     page[:links].each do |link|
+      return if @pages.find{|p| p[:url] == link }
       crawl_page link
     end
   end
@@ -35,6 +36,8 @@ class Crawler
     js     = doc.css(%{script}               ).map{|node| node["src"] }.compact
     images = doc.css(%{img}                  ).map{|node| node["src"] }.compact
     links  = doc.css(%{a}                    ).map{|node| node["href"]}.compact.sort
+
+    links  = links.map{|l| parse_url(l).to_s }
 
     assets = (css + js + images).sort
 

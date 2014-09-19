@@ -16,7 +16,10 @@ class MultiPageTest < Minitest::Test
     assert_equal [
       {
         url: "http://localhost:4000/",
-        links: ["/about.html", "/privacy.html"],
+        links: [
+          "http://localhost:4000/about.html",
+          "http://localhost:4000/privacy.html"
+        ],
         assets: [
           "/css/app.css",
           "/images/logo.png",
