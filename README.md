@@ -4,6 +4,8 @@
 
 A simple web crawler that traverses and stores all links on a target domain.
 
+Ruby 2.0+ required (for GDBM and JSON features).
+
 ## Usage
 
 The project is packaged as a gem but not pushed to rubygems. Clone the repository, `bundle`, then run the crawler executable (in the bin directory):
