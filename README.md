@@ -8,7 +8,7 @@ A simple web crawler that traverses and stores all links on a target domain.
 
 - [x] It should be limited to one domain
 - [x] It will not follow external links
-- [ ] It will not follow subdomain links
+- [x] It will not follow subdomain links
 - [x] Given a URL it should output a site map
 - [x] Site map should show which static assets each page depends on
 - [x] Site map should show links between pages
