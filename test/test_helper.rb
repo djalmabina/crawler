@@ -9,6 +9,13 @@ require 'minitest/autorun'
 require 'crawler'
 require 'webrick'
 
+class Crawler::TestCase < Minitest::Test
+  def before_setup
+    super
+    Crawler::Page.delete_all!
+  end
+end
+
 # Runs a directory as a webrick server on a locally accessible port (4000)
 class FakeSite
   def initialize(fixture_path)

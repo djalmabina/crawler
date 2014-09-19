@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class SinglePageTest < Minitest::Test
+class SinglePageTest < Crawler::TestCase
   def setup
+    super
     @site = FakeSite.new("single_page_site")
   end
 
@@ -18,6 +19,6 @@ class SinglePageTest < Minitest::Test
         links: [],
         assets: []
       }
-    ], crawler.pages
+    ], Crawler::Page.to_a
   end
 end

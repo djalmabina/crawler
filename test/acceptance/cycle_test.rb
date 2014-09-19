@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class CycleTest < Minitest::Test
+class CycleTest < Crawler::TestCase
   def setup
+    super
     @site = FakeSite.new("cycle_site")
   end
 
@@ -19,7 +20,7 @@ class CycleTest < Minitest::Test
         links: ["http://localhost:4000/"],
         assets: []
       }
-    ], crawler.pages
+    ], Crawler::Page.to_a
   end
 end
 

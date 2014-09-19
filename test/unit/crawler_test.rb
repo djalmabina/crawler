@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CrawlerTest < Minitest::Test
+class CrawlerTest < Crawler::TestCase
   def setup
     @crawler = Crawler.new("http://example.com/")
   end

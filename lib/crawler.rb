@@ -2,12 +2,12 @@ require 'nokogiri'
 require 'open-uri'
 
 class Crawler
-  attr_reader :pages
+  autoload :Page,      "crawler/page"
+  autoload :GDBMStore, "crawler/gdbm_store"
 
   def initialize(url)
     @start = url
     @uri   = URI.parse(url)
-    @pages = []
   end
 
   def crawl!
@@ -19,12 +19,12 @@ class Crawler
     return if uri.nil?
 
     page = parse_page(open(uri).read)
-    page[:url] = uri.to_s
+    page.url = uri.to_s
 
-    @pages << page
+    page.save
 
     page[:links].each do |link|
-      return if @pages.find{|p| p[:url] == link }
+      return if Page.find(link)
       crawl_page link
     end
   end
@@ -41,10 +41,10 @@ class Crawler
 
     assets = (css + js + images).sort
 
-    {
+    Page.new(
       links: links,
       assets: assets
-    }
+    )
   end
 
   def parse_url(url)

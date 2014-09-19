@@ -1,7 +1,8 @@
 require 'test_helper'
 
-class MultiPageTest < Minitest::Test
+class MultiPageTest < Crawler::TestCase
   def setup
+    super
     @site = FakeSite.new("multi_page_site")
   end
 
@@ -36,7 +37,7 @@ class MultiPageTest < Minitest::Test
         links: [],
         assets: []
       }
-    ], crawler.pages
+    ].sort_by{|p| p[:url]}, Crawler::Page.to_a.sort_by{|p| p[:url]}
   end
 end
 
