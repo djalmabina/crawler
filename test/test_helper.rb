@@ -1,5 +1,5 @@
 require 'bundler'
-Bundler.require :test
+Bundler.require
 
 require 'simplecov'
 SimpleCov.minimum_coverage 100

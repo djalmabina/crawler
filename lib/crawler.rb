@@ -6,8 +6,7 @@ class Crawler
 
   def initialize(url)
     @start = url
-    @uri = URI.parse(url)
-    @domain = "#{@uri.scheme}://#{@uri.host}:#{@uri.port}"
+    @uri   = URI.parse(url)
     @pages = []
   end
 
@@ -16,24 +15,38 @@ class Crawler
   end
 
   def crawl_page(url)
-    # todo: move this to helper or a link class
-    url = "#{@domain}#{url}" unless url =~ /^http/
+    uri = parse_url(url)
+    return if uri.nil?
 
-    page = Nokogiri::HTML(open(URI.encode(url)).read)
+    page = parse_page(open(uri).read)
+    page[:url] = uri.to_s
 
-    # todo: dry this up, maybe under Asset
-    css    = page.css("link").select{|node| node["type"] == "text/css"}.map{|node| node["href"]}
-    js     = page.css("script").map{|node| node["src"]}.compact
-    images = page.css("img"   ).map{|node| node["src"]}
+    @pages << page
 
-    # todo: move this to a Link class, also need to remove external links and add domain for relative links
-    links = page.css("a").map{|node| node["href"]}.sort
+    page[:links].each do |link|
+      crawl_page link
+    end
+  end
+
+  def parse_page(html)
+    doc = Nokogiri::HTML(html)
+
+    css    = doc.css(%{link[type="text/css"]}).map{|node| node["href"]}.compact
+    js     = doc.css(%{script}               ).map{|node| node["src"] }.compact
+    images = doc.css(%{img}                  ).map{|node| node["src"] }.compact
+    links  = doc.css(%{a}                    ).map{|node| node["href"]}.compact.sort
 
     assets = (css + js + images).sort
 
-    @pages << {path: URI.parse(url).path, links: links, assets: assets}
-    links.each do |link|
-      crawl_page link
-    end
+    {
+      links: links,
+      assets: assets
+    }
+  end
+
+  def parse_url(url)
+    uri = @uri.merge(url)
+    return nil if uri.host != @uri.host
+    uri
   end
 end

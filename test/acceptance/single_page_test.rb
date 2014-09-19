@@ -14,7 +14,7 @@ class SinglePageTest < Minitest::Test
     crawler.crawl!
     assert_equal [
       {
-        path: "/",
+        url: "http://localhost:4000/",
         links: [],
         assets: []
       }
